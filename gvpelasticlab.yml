@@ -1,8 +1,9 @@
 - name: Elastic search nodo maestro entorno LABORATORIO
   hosts: vmgvpelasticlab01
   roles:
-    - { role: ansible-elasticsearch, es_instance_name: "elkmasterlab01", es_heap_size: "1g",
+    - { role: ansible-elasticsearch, es_instance_name: "masterlab01", es_heap_size: "1g",
     es_config: {
+        network.host: "vmgvpelasticlab01",
         cluster.name: "gvpelasticlab",
         discovery.zen.ping.unicast.hosts: "vmgvpelasticlab01:9300",
         http.port: 9200,
@@ -17,9 +18,10 @@
       http_proxy: http://proxy.cfv.junta-andalucia.es:3128
       https_proxy: http://proxy.cfv.junta-andalucia.es:3128
       no_proxy: .cfv.junta-andalucia.es
-#    es_version: 5.2.2
+    es_api_host: vmgvpelasticlab01.cfv.junta-andalucia.es
+    es_api_port: 9200
     es_version_lock: false
-#    es_api_host: vmgvpelasticlab01.cfv.junta-andalucia.es
+    
     es_scripts: false
     es_templates: false
 
@@ -29,6 +31,7 @@
     #expand to all available parameters
     - { role: ansible-elasticsearch, es_instance_name: "elnodo0201", es_data_dirs: "/import/datos/elastic02_01/data", es_log_dir: "/import/software/elastic02_01/logs", 
     es_config: {
+        network.host: "vmgvpelasticlab02",
         cluster.name: "gvpelasticlab",
         discovery.zen.ping.unicast.hosts: "vmgvpelasticlab01:9300",
         http.port: 9200,
@@ -44,7 +47,7 @@
     es_version_lock: false
 #    es_version: 5.2.2
     es_heap_size: 1g
-#    es_api_host: vmgvpelasticlab02.cfv.junta-andalucia.es
+    es_api_host: vmgvpelasticlab02.cfv.junta-andalucia.es
     es_api_port: 9200
     proxy_env:
       http_proxy: http://proxy.cfv.junta-andalucia.es:3128
@@ -61,6 +64,7 @@
     #expand to all available parameters
     - { role: ansible-elasticsearch, es_instance_name: "elnodo0202", es_data_dirs: "/import/datos/elastic02_02/data", es_log_dir: "/import/software/elastic02_02/logs",
     es_config: {
+        network.host: "vmgvpelasticlab02",
         cluster.name: "gvpelasticlab",
         discovery.zen.ping.unicast.hosts: "vmgvpelasticlab01:9300",
         http.port: 9201,
@@ -76,7 +80,7 @@
     es_version_lock: false
 #    es_version: 5.2.2
     es_heap_size: 1g
-#    es_api_host: vmgvpelasticlab02.cfv.junta-andalucia.es
+    es_api_host: vmgvpelasticlab02.cfv.junta-andalucia.es
     es_api_port: 9201
     proxy_env:
       http_proxy: http://proxy.cfv.junta-andalucia.es:3128
