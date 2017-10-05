@@ -1,0 +1,85 @@
+- name: Elastic search nodo maestro entorno LABORATORIO
+  hosts: vmgvpelasticlab01
+  roles:
+    - { role: ansible-elasticsearch, es_instance_name: "elkmasterlab01", es_heap_size: "1g",
+    es_config: {
+        cluster.name: "gvpelasticlab",
+        discovery.zen.ping.unicast.hosts: "vmgvpelasticlab01:9300",
+        http.port: 9200,
+        transport.tcp.port: 9300,
+        node.data: false,
+        node.master: true,
+        bootstrap.memory_lock: false,
+        }
+    }
+  vars:
+    proxy_env:
+      http_proxy: http://proxy.cfv.junta-andalucia.es:3128
+      https_proxy: http://proxy.cfv.junta-andalucia.es:3128
+      no_proxy: .cfv.junta-andalucia.es
+#    es_version: 5.2.2
+    es_version_lock: false
+#    es_api_host: vmgvpelasticlab01.cfv.junta-andalucia.es
+    es_scripts: false
+    es_templates: false
+
+- name: Elastic search node computo LABORATORIO
+  hosts: vmgvpelasticlab02
+  roles:
+    #expand to all available parameters
+    - { role: ansible-elasticsearch, es_instance_name: "elnodo0201", es_data_dirs: "/import/datos/elastic02_01/data", es_log_dir: "/import/software/elastic02_01/logs", 
+    es_config: {
+        cluster.name: "gvpelasticlab",
+        discovery.zen.ping.unicast.hosts: "vmgvpelasticlab01:9300",
+        http.port: 9200,
+        transport.tcp.port: 9300,
+        node.data: true,
+        node.master: false,
+        bootstrap.memory_lock: true,
+        } 
+    }
+  vars:
+    es_scripts: false
+    es_templates: false
+    es_version_lock: false
+#    es_version: 5.2.2
+    es_heap_size: 1g
+#    es_api_host: vmgvpelasticlab02.cfv.junta-andalucia.es
+    es_api_port: 9200
+    proxy_env:
+      http_proxy: http://proxy.cfv.junta-andalucia.es:3128
+      https_proxy: http://proxy.cfv.junta-andalucia.es:3128
+      no_proxy: .cfv.junta-andalucia.es
+#    es_plugins:
+#    - plugin: ingest-geoip 
+#      proxy_host: proxy.cfv.junta-andalucia.es
+#      proxy_port: 3128
+
+- name: Elastic search node computo LABORATORIO
+  hosts: vmgvpelasticlab02
+  roles:
+    #expand to all available parameters
+    - { role: ansible-elasticsearch, es_instance_name: "elnodo0202", es_data_dirs: "/import/datos/elastic02_02/data", es_log_dir: "/import/software/elastic02_02/logs",
+    es_config: {
+        cluster.name: "gvpelasticlab",
+        discovery.zen.ping.unicast.hosts: "vmgvpelasticlab01:9300",
+        http.port: 9201,
+        transport.tcp.port: 9301,
+        node.data: true,
+        node.master: false,
+        bootstrap.memory_lock: true,
+        }
+    }
+  vars:
+    es_scripts: false
+    es_templates: false
+    es_version_lock: false
+#    es_version: 5.2.2
+    es_heap_size: 1g
+#    es_api_host: vmgvpelasticlab02.cfv.junta-andalucia.es
+    es_api_port: 9201
+    proxy_env:
+      http_proxy: http://proxy.cfv.junta-andalucia.es:3128
+      https_proxy: http://proxy.cfv.junta-andalucia.es:3128
+      no_proxy: .cfv.junta-andalucia.es
+

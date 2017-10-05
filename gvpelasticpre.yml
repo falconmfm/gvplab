@@ -1,0 +1,35 @@
+- name: Elastic search para Desarrollo
+  hosts: vmgvpelasticdes02
+  roles:
+    #expand to all available parameters
+    - { role: ansible-elasticsearch, es_instance_name: "elastdes0201", es_data_dirs: "/import/datos/elastic02_01/data", es_log_dir: "/import/software/elastic02_01/logs", 
+    es_config: {
+        node.name: "elasticdes01", 
+        cluster.name: "gvpelasticdes",
+        discovery.zen.ping.unicast.hosts: "localhost:9301",
+        http.port: 9201,
+        transport.tcp.port: 9301,
+        node.data: false,
+        node.master: true,
+        bootstrap.memory_lock: true,
+        } 
+    }
+  vars:
+    es_user: elastic
+    es_group: www
+    es_java_install: false
+    es_scripts: false
+    es_templates: false
+    es_version_lock: false
+    es_version: 5.2.2
+    es_heap_size: 1g
+    es_api_port: 9201
+    proxy_env:
+      http_proxy: http://proxy.cfv.junta-andalucia.es:3128
+      https_proxy: http://proxy.cfv.junta-andalucia.es:3128
+      no_proxy: .cfv.junta-andalucia.es
+#    es_plugins:
+#    - plugin: ingest-geoip 
+#      proxy_host: proxy.cfv.junta-andalucia.es
+#      proxy_port: 3128
+
